@@ -13,7 +13,7 @@ var bases = {
 };
 
 var paths = {
- scripts: ['src/**/*.jsx'],
+ scripts: ['src/js/**/*.jsx'],
  css: ['src/css/*.css'],
  html: ['src/pages/*.html']
 };
@@ -25,7 +25,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('scripts', () => {
-  gulp.src(paths.scripts)
+  gulp.src('./src/js/index.js')
   .pipe(webpack( require('./webpack.config.js') ))
   .pipe(gulp.dest(bases.dist + 'js'));
 });

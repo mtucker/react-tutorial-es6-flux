@@ -11,11 +11,24 @@ module.exports = {
         ],
         test: /\.jsx?$/,
         query: {
-          presets: ['es2015', 'react'],
+          presets: ['es2015', 'react', 'stage-0'],
         }
       }
     ]
   },
+  resolve: {
+      extensions: [
+        '',
+        '.js',
+        '.json',
+        '.jsx',
+        '.html',
+        '.css',
+        '.scss',
+        '.yaml',
+        '.yml'
+      ]
+    },
   output: {
     path: path.join(__dirname, 'dist/js'),
     filename: 'index.js'
