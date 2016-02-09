@@ -1,4 +1,5 @@
-import { Store, toImmutable } from 'nuclear-js'
+import { Store, toImmutable } from 'nuclear-js';
+import actionTypes from '../actions/action-types';
 
 export default Store({
   getInitialState() {
@@ -6,13 +7,17 @@ export default Store({
   },
 
   initialize() {
-    this.on("RECEIVE_COMMENTS", receiveComments);
+    this.on(actionTypes.FETCH_COMMENTS_SUCCESS, fetchCommentsSuccess);
+    this.on(actionTypes.CREATE_COMMENT_START, createCommentStart);
   }
 })
 
-function receiveComments(state, comments ) {
-  console.log("RECEIVE COMMENTS INS COMMENT STORE");
+function fetchCommentsSuccess(state, comments) {
   let newComments = toImmutable(comments);
-  console.log(newComments);
   return state = newComments;
+}
+
+function createCommentStart(state, comment) {
+  let newComment = toImmutable(comment);
+  return state.merge(newComment);
 }

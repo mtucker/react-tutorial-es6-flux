@@ -1,49 +1,47 @@
 import React, {Component} from 'react';
 import { Provider, connect, nuclearMixin } from 'nuclear-js-react-addons';
+import actions from '../actions/actions'
+import getters from '../getters/getters'
 
+@connect(props => ({
+    values: getters.newFormValues
+}))
 export default class CommentForm extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {author: '', text: ''};
-		this.handleAuthorChange = this.handleAuthorChange.bind(this);
-		this.handleTextChange = this.handleTextChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleAuthorChange(e) {
-		this.setState({author: e.target.value});
-	}
-
-	handleTextChange(e) {
-		this.setState({text: e.target.value});
+	updateField(fieldName, e) {
+		actions.updateCommentField(fieldName, e.target.value);
 	}
 
 	handleSubmit(e) {
 		e.preventDefault();
-		var author = this.state.author.trim()
-		var text = this.state.text.trim()
-		if (!text || !author) {
-			return;
-		}
-		this.props.onCommentSubmit({author: author, text: text})
-		this.setState({author: '', text: ''});
+		actions.submitCommentForm();
 	}
 
 	render() {
+
+		const {
+      reactor,
+      values
+    } = this.props;
+
 		return (
 			<form className="commentForm" onSubmit={this.handleSubmit}>
 				<input
 					type="text"
 					placeholder="Your name"
-					value={this.state.author}
-					onChange={this.handleAuthorChange}
+					value={values.get('author')}
+					onChange={this.updateField.bind(this, 'author')}
 				/>
 				<input
 					type="text"
 					placeholder="Say something..."
-					value={this.state.text}
-					onChange={this.handleTextChange}
+					value={values.get('text')}
+					onChange={this.updateField.bind(this, 'text')}
 				/>
 				<input type="submit" value="Post" />
 			</form>

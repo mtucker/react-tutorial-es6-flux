@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import CommentList from './comment-list';
 import CommentForm from './comment-form';
 import actions from '../actions/actions';
-import { provideReactor } from 'nuclear-js-react-addons';
+import { Provider } from 'nuclear-js-react-addons';
+import reactor from '../reactor';
 
-@provideReactor
 export default class CommentBox extends Component {
 
 	constructor(props) {
@@ -38,11 +38,13 @@ export default class CommentBox extends Component {
 
 	render() {
 		return (
-			<div className="commentBox">
-				<h1>Comments</h1>
-				<CommentList />
-				<CommentForm onCommentSubmit={this.handleCommentSubmit}/>
-			</div>
+			<Provider reactor={reactor}>
+				<div className="commentBox">
+					<h1>Comments</h1>
+					<CommentList />
+					<CommentForm onCommentSubmit={this.handleCommentSubmit}/>
+				</div>
+		</Provider>
 		);
 	}
 

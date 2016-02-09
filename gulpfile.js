@@ -1,4 +1,5 @@
 require('babel-polyfill');
+var browserSync = require('browser-sync').create();
 
 var gulp = require('gulp'),
   babel = require('gulp-babel'),

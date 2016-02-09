@@ -1,8 +1,5 @@
-const comments = [
-  ['comments'],
-  (comments) => {
-    return comments;
-  }
-];
+const comments = ['commentStore']
 
-export default { comments };
+const newFormValues = ['formStore']
+
+export default { comments, newFormValues };
