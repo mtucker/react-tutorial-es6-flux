@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { Provider, connect, nuclearMixin } from 'nuclear-js-react-addons';
 
 export default class CommentForm extends Component {
 

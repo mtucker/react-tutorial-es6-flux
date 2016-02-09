@@ -1,8 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CommentBox from './components/index';
+import CommentBox from './components/comment-box';
+import CommentStore from './stores/comment-store'
+import reactor from './reactor';
+
+reactor.registerStores({
+  'comments': CommentStore
+});
 
 ReactDOM.render(
-	<CommentBox url="/api/comments" pollInterval={2000}/>,
+	<CommentBox reactor={reactor} url="/api/comments" pollInterval={2000}/>,
 	document.getElementById('content')
 );

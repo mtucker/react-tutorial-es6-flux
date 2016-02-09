@@ -1,18 +1,25 @@
 import React, {Component} from 'react';
 import Comment from './comment';
+import getters from '../getters/getters';
+import { Provider, connect, nuclearComponent } from 'nuclear-js-react-addons'
 
+@connect(props => ({
+    comments: getters.comments
+}))
 export default class CommentList extends Component {
 
-	constructor(props) {
-		super(props);
-		this.state = {data: []};
-	}
-
 	render() {
-		var commentNodes = this.props.data.map(function(comment){
+
+    const {
+      reactor,
+      comments
+    } = this.props;
+
+		var commentNodes = comments.valueSeq().map(comment => {
+
 			return (
-				<Comment author={comment.author} key={comment.id}>
-					{comment.text}
+				<Comment author={comment.get('author')} key={comment.get('id')}>
+					{comment.get('text')}
 				</Comment>
 			);
 

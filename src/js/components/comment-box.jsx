@@ -1,35 +1,15 @@
 import React, {Component} from 'react';
 import CommentList from './comment-list';
-import CommentForm from './comment-form'
+import CommentForm from './comment-form';
+import actions from '../actions/actions';
+import { provideReactor } from 'nuclear-js-react-addons';
 
+@provideReactor
 export default class CommentBox extends Component {
-
-	mixins: [reactor.ReactMixin];
 
 	constructor(props) {
 		super(props);
-		this.state = {data: []};
 		this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
-	}
-
-	getDataBindings() {
-		return {
-			data: commentsGetter
-		}
-	}
-
-	loadCommentsFromServer() {
-		$.ajax({
-			url: this.props.url,
-			dataType: 'json',
-			cache: false,
-			success: function(data) {
-				this.setState({data: data});
-			}.bind(this),
-			error: function(xhr, status, err) {
-				console.error(this.props.url, status, err.toString());
-			}.bind(this)
-		});
 	}
 
 	handleCommentSubmit(comment) {
@@ -53,15 +33,14 @@ export default class CommentBox extends Component {
 	}
 
 	componentDidMount() {
-		this.loadCommentsFromServer();
-		setInterval(() => this.loadCommentsFromServer(), this.props.pollInterval);
+		setInterval(() => actions.fetchComments(), this.props.pollInterval);
 	}
 
 	render() {
 		return (
 			<div className="commentBox">
 				<h1>Comments</h1>
-				<CommentList data={this.state.data} />
+				<CommentList />
 				<CommentForm onCommentSubmit={this.handleCommentSubmit}/>
 			</div>
 		);
